@@ -30,14 +30,14 @@ def click_to_next_page(driver, original_products_listing_page, deal_image_list, 
         time.sleep(np.random.randint(3,5))
     return
 
-# Make a list of the urls for each of the products listed on the products listings page 
+# Make a list of the urls for each of the products listed on the products listings page
 def get_hrefs(deal_image_list):
     list_of_pages = []
     for deal_image_item in deal_image_list:
         list_of_pages.append(deal_image_item.get_attribute('href'))
     return list_of_pages
 
-# Obtain the list price from a product page 
+# Obtain the list price from a product page
 def get_list_price(driver, locator, locator_backup):
     try:
         element_text = driver.find_element_by_id(locator).text
@@ -88,7 +88,7 @@ def try_to_get_element_data(driver, locator, is_xpath=False, need_title=False, i
     return element_data
 
 
-# Get the asin, the unique Amazon product id 
+# Get the asin, the unique Amazon product id
 # Since asin and list date same container, obtain both at once and then split them by line
 def get_asin_and_list_date(driver) -> list:
     container_locator = '#detailBullets_feature_div ul'
@@ -104,7 +104,7 @@ def get_asin_and_list_date(driver) -> list:
     return asin_and_list_date
 
 
-# Clean the asin text to just get the number 
+# Clean the asin text to just get the number
 def get_asin(driver):
     try:
         asin_and_list_date = get_asin_and_list_date(driver)
@@ -151,7 +151,7 @@ def get_num_answered_questions(driver, locator):
 
 
 # Clean the seller rank text to just get the seller rank and category
-'''The reason I didn't clean the category section of string is sometimes a page of product listings would include non-clothing/jewelry/shoes items. I thus needed to be able to identify and remove those when I cleaned my data later on. ''' 
+'''The reason I didn't clean the category section of string is sometimes a page of product listings would include non-clothing/jewelry/shoes items. I thus needed to be able to identify and remove those when I cleaned my data later on. '''
 def get_seller_rank(driver, locator, locator_backup):
     try:
         try:
@@ -266,7 +266,7 @@ def pull_features_per_product_page(driver, list_of_pages):
     return raw_df
 
 
-# In order to view the prime icon for a product, you need to login to your prime account 
+# In order to view the prime icon for a product, you need to login to your prime account
 # This will prompt the person running the script to login and send the credentials to Amazon
 def enter_password(driver):
     driver.get('https://www.amazon.com/ap/signin?openid.return_to=https%3A%2F%2Fwww.amazon.com%2F%3Fref_%3Dnav_ya_signin%26_encoding%3DUTF8&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&&openid.pape.max_auth_age=0')
@@ -284,7 +284,7 @@ def enter_password(driver):
     signin_box.click()
 
 
-# My main function, which will kick off the whole script 
+# My main function, which will kick off the whole script
 # Amazon would start suspending pages after scraping to products listings pages, so I scraped two at a time
 def main():
     original_listing_page = 'https://smile.amazon.com/fashion-sales-and-deals/b/ref=gbps_ftr_m15_3ccc_page_2?node=9538491011&nocache=1524333593751&gb_f_GB-SUPPLE=dealStates:AVAILABLE%252CWAITLIST%252CWAITLISTFULL%252CEXPIRED%252CSOLDOUT,page:2,sortOrder:BY_SCORE,dealsPerPage:32&pf_rd_p=dea43efa-ec24-4825-a635-85269d433ccc&pf_rd_s=merchandised-search-15&pf_rd_t=101&pf_rd_i=9538491011&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=AN5J01FTYBSBFDP82JSK&ie=UTF8'
@@ -327,4 +327,5 @@ def main():
     driver.quit()
 
 
-main()
+if __name__ == "__main__":
+    main()
